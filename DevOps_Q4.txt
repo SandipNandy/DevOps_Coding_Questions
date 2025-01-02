@@ -1,0 +1,75 @@
+Q4. Develop a script to parse logs and generate reports in python?
+
+==> 
+
+This example parses Apache or Nginx logs in the Common Log Format (CLF) and generates a report summarizing:
+
+Total requests.
+HTTP status code distribution.
+Top IP addresses making requests.
+
+Step 1: The Log Parsing Script
+
+import re
+from collections import Counter
+import json
+
+# Configuration
+LOG_FILE = "access.log"  # Path to the log file
+REPORT_FILE = "log_report.json"  # Path to save the report
+
+# Regular expression to match the Common Log Format (CLF)
+LOG_PATTERN = r'(?P<ip>[\d\.]+) - - \[(?P<timestamp>[^\]]+)\] "(?P<request>[^"]+)" (?P<status>\d+) (?P<size>\d+|-)'
+
+def parse_log_file(log_file):
+    """Parse the log file and extract relevant data."""
+    log_data = []
+    with open(log_file, "r") as file:
+        for line in file:
+            match = re.match(LOG_PATTERN, line)
+            if match:
+                log_data.append(match.groupdict())
+    return log_data
+
+def generate_report(log_data):
+    """Generate a report from the parsed log data."""
+    total_requests = len(log_data)
+    status_counter = Counter(entry["status"] for entry in log_data)
+    ip_counter = Counter(entry["ip"] for entry in log_data)
+
+    # Top 10 IP addresses
+    top_ips = ip_counter.most_common(10)
+
+    report = {
+        "total_requests": total_requests,
+        "status_code_distribution": dict(status_counter),
+        "top_ip_addresses": top_ips,
+    }
+    return report
+
+def save_report(report, report_file):
+    """Save the report to a JSON file."""
+    with open(report_file, "w") as file:
+        json.dump(report, file, indent=4)
+    print(f"Report saved to {report_file}")
+
+def main():
+    print("Parsing log file...")
+    log_data = parse_log_file(LOG_FILE)
+
+    print("Generating report...")
+    report = generate_report(log_data)
+
+    print("Saving report...")
+    save_report(report, REPORT_FILE)
+
+if __name__ == "__main__":
+    main()
+
+
+Step 2: Run the Script
+Save the script as log_parser.py and run it:
+
+python log_parser.py
+
+
