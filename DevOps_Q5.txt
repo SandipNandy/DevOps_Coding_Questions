@@ -1,0 +1,101 @@
+Q5. Create a script to interact with APIs (e.g., REST, GraphQL) to automate tasks.
+
+
+==> 
+Step 1: Install Required Libraries
+Install the requests library for HTTP requests and graphqlclient for GraphQL interactions:
+
+pip install requests graphqlclient
+
+
+Step 2: The API Interaction Script
+
+import requests
+from graphqlclient import GraphQLClient
+
+# Configuration for REST API
+REST_API_BASE_URL = "https://jsonplaceholder.typicode.com"
+REST_API_ENDPOINT = "/todos"
+
+# Configuration for GraphQL API
+GRAPHQL_API_URL = "https://countries.trevorblades.com/"
+GRAPHQL_QUERY = """
+{
+  countries {
+    code
+    name
+    emoji
+  }
+}
+"""
+
+# REST API Functions
+def get_rest_data():
+    """Fetch data from the REST API."""
+    print("Fetching data from REST API...")
+    response = requests.get(f"{REST_API_BASE_URL}{REST_API_ENDPOINT}")
+    if response.status_code == 200:
+        data = response.json()
+        print("Data retrieved successfully!")
+        return data
+    else:
+        print(f"Failed to fetch data. Status code: {response.status_code}")
+        return None
+
+def post_rest_data(data):
+    """Send data to the REST API."""
+    print("Sending data to REST API...")
+    response = requests.post(f"{REST_API_BASE_URL}{REST_API_ENDPOINT}", json=data)
+    if response.status_code == 201:
+        print("Data sent successfully!")
+        return response.json()
+    else:
+        print(f"Failed to send data. Status code: {response.status_code}")
+        return None
+
+# GraphQL API Functions
+def fetch_graphql_data():
+    """Fetch data from the GraphQL API."""
+    print("Fetching data from GraphQL API...")
+    client = GraphQLClient(GRAPHQL_API_URL)
+    response = client.execute(GRAPHQL_QUERY)
+    data = response
+    if data:
+        print("Data retrieved successfully!")
+        return data
+    else:
+        print("Failed to fetch data from GraphQL API.")
+        return None
+
+# Main Function
+def main():
+    print("Interacting with REST API...")
+    # Retrieve data from REST API
+    todos = get_rest_data()
+    if todos:
+        print(f"First TODO: {todos[0]}")
+
+    # Send data to REST API
+    new_todo = {"title": "Learn API Automation", "completed": False}
+    created_todo = post_rest_data(new_todo)
+    if created_todo:
+        print(f"New TODO created: {created_todo}")
+
+    print("\nInteracting with GraphQL API...")
+    # Fetch data from GraphQL API
+    countries_data = fetch_graphql_data()
+    if countries_data:
+        print("GraphQL data preview:")
+        print(countries_data[:300])  # Print first 300 characters of the response
+
+if __name__ == "__main__":
+    main()
+
+
+
+Step 3: Run the Script
+Save the script as api_interaction.py and run it:
+
+python api_interaction.py
+
+
