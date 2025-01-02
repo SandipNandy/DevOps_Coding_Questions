@@ -1,0 +1,89 @@
+Q2. Create a script to monitor system resources (CPU, memory, disk) and send alerts if thresholds are exceeded.
+
+==> 
+
+Step 1: Install Dependencies
+Install the required Python libraries:
+
+pip install psutil
+
+
+Step 2: The Monitoring Script
+
+import psutil
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+import time
+
+# Configuration
+CPU_THRESHOLD = 80  # CPU usage percentage
+MEMORY_THRESHOLD = 80  # Memory usage percentage
+DISK_THRESHOLD = 80  # Disk usage percentage
+CHECK_INTERVAL = 60  # Time between checks (in seconds)
+
+EMAIL_SENDER = "your_email@example.com"
+EMAIL_PASSWORD = "your_email_password"
+EMAIL_RECEIVER = "receiver_email@example.com"
+SMTP_SERVER = "smtp.example.com"
+SMTP_PORT = 587
+
+def send_email(subject, message):
+    try:
+        # Create the email
+        msg = MIMEMultipart()
+        msg["From"] = EMAIL_SENDER
+        msg["To"] = EMAIL_RECEIVER
+        msg["Subject"] = subject
+
+        # Attach the message body
+        msg.attach(MIMEText(message, "plain"))
+
+        # Send the email
+        with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
+            server.starttls()
+            server.login(EMAIL_SENDER, EMAIL_PASSWORD)
+            server.sendmail(EMAIL_SENDER, EMAIL_RECEIVER, msg.as_string())
+        print(f"Alert sent: {subject}")
+    except Exception as e:
+        print(f"Failed to send email: {e}")
+
+def monitor_system():
+    while True:
+        # Check CPU usage
+        cpu_usage = psutil.cpu_percent(interval=1)
+        if cpu_usage > CPU_THRESHOLD:
+            send_email(
+                "High CPU Usage Alert",
+                f"CPU usage is at {cpu_usage}%, which exceeds the threshold of {CPU_THRESHOLD}%.",
+            )
+
+        # Check memory usage
+        memory = psutil.virtual_memory()
+        if memory.percent > MEMORY_THRESHOLD:
+            send_email(
+                "High Memory Usage Alert",
+                f"Memory usage is at {memory.percent}%, which exceeds the threshold of {MEMORY_THRESHOLD}%.",
+            )
+
+        # Check disk usage
+        disk = psutil.disk_usage("/")
+        if disk.percent > DISK_THRESHOLD:
+            send_email(
+                "High Disk Usage Alert",
+                f"Disk usage is at {disk.percent}%, which exceeds the threshold of {DISK_THRESHOLD}%.",
+            )
+
+        # Wait before next check
+        time.sleep(CHECK_INTERVAL)
+
+if __name__ == "__main__":
+    print("Starting system resource monitor...")
+    monitor_system()
+
+
+Step 3: Run the Script
+Run the script with:
+
+python monitor_system.py
+
