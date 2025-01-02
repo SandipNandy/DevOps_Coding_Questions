@@ -1,0 +1,114 @@
+Q3. Write a script to automate backups of specific directories or files.
+
+==> 
+Step 1: Install Required Libraries
+Install the necessary Python libraries:
+
+pip install paramiko boto3
+
+
+Step 2: The Backup Script
+
+import os
+import zipfile
+import datetime
+import paramiko
+import boto3
+
+# Configuration
+BACKUP_SOURCE = ["/path/to/directory1", "/path/to/file1"]
+BACKUP_DESTINATION = "/path/to/backup/destination"
+REMOTE_SERVER = {
+    "enabled": False,  # Set to True to enable SCP upload
+    "host": "your.server.com",
+    "port": 22,
+    "username": "username",
+    "password": "password",
+    "remote_path": "/path/to/remote/backup",
+}
+AWS_S3 = {
+    "enabled": False,  # Set to True to enable S3 upload
+    "bucket_name": "your-s3-bucket",
+    "aws_access_key_id": "your-access-key-id",
+    "aws_secret_access_key": "your-secret-access-key",
+    "region_name": "your-region",
+}
+
+
+def create_backup():
+    # Create a timestamped zip file
+    timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+    backup_file = os.path.join(BACKUP_DESTINATION, f"backup_{timestamp}.zip")
+
+    print(f"Creating backup: {backup_file}")
+    with zipfile.ZipFile(backup_file, "w", zipfile.ZIP_DEFLATED) as zipf:
+        for source in BACKUP_SOURCE:
+            if os.path.exists(source):
+                if os.path.isdir(source):
+                    for root, _, files in os.walk(source):
+                        for file in files:
+                            file_path = os.path.join(root, file)
+                            zipf.write(file_path, os.path.relpath(file_path, source))
+                else:
+                    zipf.write(source, os.path.basename(source))
+            else:
+                print(f"Warning: {source} does not exist and will be skipped.")
+    return backup_file
+
+
+def upload_to_scp(file_path):
+    try:
+        print("Uploading backup to remote server via SCP...")
+        ssh = paramiko.SSHClient()
+        ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+        ssh.connect(
+            REMOTE_SERVER["host"],
+            port=REMOTE_SERVER["port"],
+            username=REMOTE_SERVER["username"],
+            password=REMOTE_SERVER["password"],
+        )
+        sftp = ssh.open_sftp()
+        remote_path = os.path.join(REMOTE_SERVER["remote_path"], os.path.basename(file_path))
+        sftp.put(file_path, remote_path)
+        sftp.close()
+        ssh.close()
+        print("Backup uploaded successfully via SCP.")
+    except Exception as e:
+        print(f"Failed to upload via SCP: {e}")
+
+
+def upload_to_s3(file_path):
+    try:
+        print("Uploading backup to AWS S3...")
+        s3 = boto3.client(
+            "s3",
+            aws_access_key_id=AWS_S3["aws_access_key_id"],
+            aws_secret_access_key=AWS_S3["aws_secret_access_key"],
+            region_name=AWS_S3["region_name"],
+        )
+        s3.upload_file(file_path, AWS_S3["bucket_name"], os.path.basename(file_path))
+        print("Backup uploaded successfully to AWS S3.")
+    except Exception as e:
+        print(f"Failed to upload to S3: {e}")
+
+
+if __name__ == "__main__":
+    if not os.path.exists(BACKUP_DESTINATION):
+        os.makedirs(BACKUP_DESTINATION)
+
+    backup_file = create_backup()
+
+    if REMOTE_SERVER["enabled"]:
+        upload_to_scp(backup_file)
+
+    if AWS_S3["enabled"]:
+        upload_to_s3(backup_file)
+
+    print("Backup process completed.")
+
+
+Step 3: Run the Script
+Run the script using:
+
+python backup_script.py
+
