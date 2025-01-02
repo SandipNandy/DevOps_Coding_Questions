@@ -1,0 +1,90 @@
+Q1. Write a script to automate a server provisioning process using tools like Ansible or Puppet.
+
+==> Assumptions:
+             1. You have Ansible installed on a control machine (e.g., your local machine or a separate server).
+             2. You have a working SSH connection to the target server(s).
+             3. The target server(s) are running a Linux-based OS (e.g.Ubuntu)
+
+
+Step 1: Install Ansible
+
+sudo apt update
+sudo apt install ansible
+
+
+Step 2: Define Inventory File (inventory.ini)
+An inventory file defines the target servers for your playbook. For example, you might have an inventory file inventory.ini as follows:
+
+[webservers]
+192.168.1.10
+192.168.31.11
+
+[dbservers]
+192.168.13.20
+
+
+Step 3: Write the Ansible Playbook (provision.yml)
+Here's a basic Ansible playbook to automate server provisioning. This script installs packages, configures a firewall, and starts a service:
+
+
+---
+- name: Provision and configure server
+  hosts: all
+  become: true
+  tasks:
+
+    # Update apt cache
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+
+    # Install necessary packages
+    - name: Install packages (nginx, curl, vim)
+      apt:
+        name:
+          - nginx
+          - curl
+          - vim
+        state: present
+
+    # Configure firewall (allow HTTP/HTTPS traffic)
+    - name: Allow HTTP and HTTPS through the firewall
+      ufw:
+        rule: allow
+        name: 'Apache Full'
+        state: enabled
+
+    # Start and enable Nginx service
+    - name: Ensure Nginx is running and enabled
+      service:
+        name: nginx
+        state: started
+        enabled: yes
+
+    # Set up a custom message on the homepage (index.html)
+    - name: Create a custom index.html
+      copy:
+        dest: /var/www/html/index.html
+        content: |
+          <html>
+            <head><title>Provisioning Successful</title></head>
+            <body><h1>Provisioning Successful on {{ inventory_hostname }}</h1></body>
+          </html>
+        owner: www-data
+        group: www-data
+        mode: '0644'
+
+    # Ensure the firewall is active
+    - name: Enable UFW firewall
+      ufw:
+        state: enabled
+
+
+
+Step 4: Run the Playbook
+To run the playbook, use the following command:
+
+ansible-playbook -i inventory.ini provision.yml
+
+
+
