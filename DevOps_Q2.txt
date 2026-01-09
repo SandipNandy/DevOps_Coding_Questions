@@ -6,7 +6,6 @@ Install the required Python libraries:
 
 pip install psutil
 Step 2: The Monitoring Script
-
 import psutil
 import smtplib
 from email.mime.text import MIMEText
@@ -83,6 +82,7 @@ Step 3: Run the Script
 Run the script with:
 
 python monitor_system.py
+
 
 
 
