@@ -5,7 +5,6 @@ Step 1: Install Required Libraries
 Install the necessary Python libraries:
 pip install paramiko boto3
 
-
 Step 2: The Backup Script
 
 import os
@@ -110,5 +109,6 @@ Step 3: Run the Script
 Run the script using:
 
 python backup_script.py
+
 
 
