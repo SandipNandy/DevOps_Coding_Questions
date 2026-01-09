@@ -3,7 +3,6 @@ Q3. Write a script to automate backups of specific directories or files.
 ==> 
 Step 1: Install Required Libraries
 Install the necessary Python libraries:
-
 pip install paramiko boto3
 
 
@@ -111,4 +110,5 @@ Step 3: Run the Script
 Run the script using:
 
 python backup_script.py
+
 
