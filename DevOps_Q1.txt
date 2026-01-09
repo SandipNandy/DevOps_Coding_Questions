@@ -1,5 +1,4 @@
 Q1. Write a script to automate a server provisioning process using tools like Ansible or Puppet.
-
 ==> Assumptions:
              1. You have Ansible installed on a control machine (e.g., your local machine or a separate server).
              2. You have a working SSH connection to the target server(s).
@@ -85,6 +84,7 @@ Step 4: Run the Playbook
 To run the playbook, use the following command:
 
 ansible-playbook -i inventory.ini provision.yml
+
 
 
 
