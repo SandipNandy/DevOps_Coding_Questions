@@ -4,7 +4,6 @@ Q1. Write a script to automate a server provisioning process using tools like An
              2. You have a working SSH connection to the target server(s).
              3. The target server(s) are running a Linux-based OS (e.g.Ubuntu)
 
-
 Step 1: Install Ansible
 
 sudo apt update
@@ -84,6 +83,7 @@ Step 4: Run the Playbook
 To run the playbook, use the following command:
 
 ansible-playbook -i inventory.ini provision.yml
+
 
 
 
