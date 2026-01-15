@@ -1,6 +1,5 @@
 Q5. Create a script to interact with APIs (e.g., REST, GraphQL) to automate tasks.
 
-
 ==> 
 Step 1: Install Required Libraries
 Install the requests library for HTTP requests and graphqlclient for GraphQL interactions:
@@ -97,5 +96,6 @@ Step 3: Run the Script
 Save the script as api_interaction.py and run it:
 
 python api_interaction.py
+
 
 
