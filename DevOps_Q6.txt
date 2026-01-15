@@ -1,7 +1,6 @@
 Q6. Write a script to automate deployment to a cloud platform (AWS, GCP, Azure)
 
 ==> 
-
 Step 1: Install Required Libraries
 Install Boto3:
 
@@ -107,4 +106,5 @@ Step 4: Run the Script
 Save the script as aws_deploy.py and execute it:
 
 python aws_deploy.py
+
 
