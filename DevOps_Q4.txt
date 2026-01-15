@@ -1,7 +1,6 @@
 Q4. Develop a script to parse logs and generate reports in python?
 
 ==> 
-
 This example parses Apache or Nginx logs in the Common Log Format (CLF) and generates a report summarizing:
 
 Total requests.
@@ -71,5 +70,6 @@ Step 2: Run the Script
 Save the script as log_parser.py and run it:
 
 python log_parser.py
+
 
 
