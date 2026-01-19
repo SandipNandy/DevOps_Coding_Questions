@@ -8,7 +8,6 @@ HTTP status code distribution.
 Top IP addresses making requests.
 
 Step 1: The Log Parsing Script
-
 import re
 from collections import Counter
 import json
@@ -70,6 +69,7 @@ Step 2: Run the Script
 Save the script as log_parser.py and run it:
 
 python log_parser.py
+
 
 
 
