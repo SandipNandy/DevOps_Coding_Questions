@@ -103,11 +103,11 @@ if __name__ == "__main__":
 
     print("Backup process completed.")
 
-
 Step 3: Run the Script
 Run the script using:
 
 python backup_script.py
+
 
 
 
