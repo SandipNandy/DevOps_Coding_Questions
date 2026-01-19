@@ -89,5 +89,3 @@ python monitor_system.py
 
 
 
-
-
