@@ -10,7 +10,7 @@ sudo apt update
 sudo apt install ansible
 
 Step 2: Define Inventory File (inventory.ini)
-An inventory file defines the target servers for your playbook. For example, you might have an inventory file inventory.ini as follows:
+==> An inventory file defines the target servers for your playbook. For example, you might have an inventory file inventory.ini as follows:
 [webservers]
 192.168.1.10
 192.168.31.11
@@ -81,6 +81,7 @@ Step 4: Run the Playbook
 To run the playbook, use the following command:
 
 ansible-playbook -i inventory.ini provision.yml
+
 
 
 
