@@ -22,7 +22,6 @@ Step 2: Define Inventory File (inventory.ini)
 Step 3: Write the Ansible Playbook (provision.yml)
 Here's a basic Ansible playbook to automate server provisioning. This script installs packages, configures a firewall, and starts a service:
 
-
 ---
 - name: Provision and configure server
   hosts: all
@@ -81,6 +80,7 @@ Step 4: Run the Playbook
 To run the playbook, use the following command:
 
 ansible-playbook -i inventory.ini provision.yml
+
 
 
 
