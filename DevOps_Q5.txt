@@ -6,7 +6,6 @@ Install the requests library for HTTP requests and graphqlclient for GraphQL int
 pip install requests graphqlclient
 
 Step 2: The API Interaction Script
-
 import requests
 from graphqlclient import GraphQLClient
 
@@ -96,6 +95,7 @@ Step 3: Run the Script
 Save the script as api_interaction.py and run it:
 
 python api_interaction.py
+
 
 
 
