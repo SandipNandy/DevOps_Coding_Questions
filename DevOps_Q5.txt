@@ -15,6 +15,7 @@ REST_API_BASE_URL = "https://jsonplaceholder.typicode.com"
 REST_API_ENDPOINT = "/todos"
 
 # Configuration for GraphQL API
+
 GRAPHQL_API_URL = "https://countries.trevorblades.com/"
 GRAPHQL_QUERY = """
 {
@@ -94,6 +95,7 @@ Step 3: Run the Script
 Save the script as api_interaction.py and run it:
 
 python api_interaction.py
+
 
 
 
