@@ -12,6 +12,7 @@ Step 2: The Monitoring Script
 import psutil
 
 import smtplib
+
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import time
@@ -87,6 +88,7 @@ Step 3: Run the Script
 Run the script with:
 
 python monitor_system.py
+
 
 
 
