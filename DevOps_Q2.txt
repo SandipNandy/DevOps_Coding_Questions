@@ -22,6 +22,7 @@ import time
 CPU_THRESHOLD = 80  # CPU usage percentage
 
 MEMORY_THRESHOLD = 80  # Memory usage percentage
+
 DISK_THRESHOLD = 80  # Disk usage percentage
 CHECK_INTERVAL = 60  # Time between checks (in seconds)
 
@@ -89,6 +90,7 @@ Step 3: Run the Script
 Run the script with:
 
 python monitor_system.py
+
 
 
 
