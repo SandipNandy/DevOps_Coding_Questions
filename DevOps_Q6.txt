@@ -6,7 +6,6 @@ pip install boto3
 Step 2: Script for AWS Deployment
 
 import boto3
-
 import time
 
 # Configuration
@@ -108,6 +107,7 @@ Step 4: Run the Script
 Save the script as aws_deploy.py and execute it:
 
 python aws_deploy.py
+
 
 
 
