@@ -11,7 +11,6 @@ import time
 # Configuration
 AWS_REGION = "us-east-1"
 AMI_ID = "ami-0c02fb55956c7d316"  # Amazon Linux 2 AMI
-
 INSTANCE_TYPE = "t2.micro"
 
 KEY_PAIR_NAME = "my-key-pair"
@@ -106,6 +105,7 @@ Step 4: Run the Script
 Save the script as aws_deploy.py and execute it:
 
 python aws_deploy.py
+
 
 
 
